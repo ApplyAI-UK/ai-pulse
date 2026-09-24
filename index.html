@@ -395,6 +395,11 @@
       throw new Error("Your sign-up didn't go through. Try again in a moment.");
     } catch (err) {
       console.error(err);
+      // If the in-page request is blocked (browser privacy settings, ad blockers),
+      // send the sign-up the standard way instead. Mailchimp shows its own confirmation page.
+      if (/timeout|network/.test(err.message)) {
+        return postToMailchimpDirectly(payload);
+      }
       msg.textContent = /timeout|network/.test(err.message)
         ? "Your sign-up didn't go through. Check your connection and try again."
         : err.message;
@@ -403,6 +408,29 @@
       btn.textContent = "Subscribe to AI Pulse";
     }
   });
+
+  function postToMailchimpDirectly(payload) {
+    const f = document.createElement("form");
+    f.method = "post";
+    f.action = MAILCHIMP_ACTION_URL.replace(/&amp;/g, "&");
+    f.style.display = "none";
+    const u = new URL(f.action);
+    const fields = {
+      [MERGE_TAGS.email]: payload.email,
+      [MERGE_TAGS.firstName]: payload.firstName,
+      [MERGE_TAGS.lastName]: payload.lastName,
+      [MERGE_TAGS.company]: payload.company,
+      tags: "7228757",
+      ["b_" + u.searchParams.get("u") + "_" + u.searchParams.get("id")]: ""
+    };
+    Object.entries(fields).forEach(([name, value]) => {
+      const i = document.createElement("input");
+      i.type = "hidden"; i.name = name; i.value = value || "";
+      f.appendChild(i);
+    });
+    document.body.appendChild(f);
+    f.submit();
+  }
 
   function showDone(name, needsConfirm, already) {
     const done = panel.querySelector(".done");
