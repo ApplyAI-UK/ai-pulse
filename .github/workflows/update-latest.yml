@@ -1,1 +1,31 @@
+name: Update latest AI Pulse
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # every 15 minutes (GitHub can run a few minutes late)
+  workflow_dispatch:          # "Run workflow" button for an instant update
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-latest
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read latest edition from the Mailchimp archive
+        run: python3 scripts/update_latest.py
+      - name: Commit if changed
+        run: |
+          if [ -n "$(git status --porcelain latest.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+            git add latest.json
+            git commit -m "Update latest AI Pulse edition"
+            git push
+          fi
 
