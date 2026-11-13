@@ -1,11 +1,17 @@
 {
   "latest": {
-    "title": "What AI is making possible",
-    "subject": "AI Pulse: What AI is making possible",
-    "sent": "2026-11-06",
-    "url": "https://eepurl.com/qkSq_J-s0x"
+    "title": "From scattered assistants to focused builds",
+    "subject": "AI Pulse: From scattered assistants to focused builds",
+    "sent": "2026-11-13",
+    "url": "https://eepurl.com/AuaX47wLkY"
   },
   "editions": [
+    {
+      "title": "From scattered assistants to focused builds",
+      "subject": "AI Pulse: From scattered assistants to focused builds",
+      "sent": "2026-11-13",
+      "url": "https://eepurl.com/AuaX47wLkY"
+    },
     {
       "title": "What AI is making possible",
       "subject": "AI Pulse: What AI is making possible",
@@ -59,12 +65,6 @@
       "subject": "From applying AI internally to creating a new client offering",
       "sent": "2026-10-20",
       "url": "https://eepurl.com/_r3m2E3iG1"
-    },
-    {
-      "title": "Your AI budget for 2027",
-      "subject": "Your AI budget for 2027",
-      "sent": "2026-10-19",
-      "url": "https://eepurl.com/EAiSmVZZGQ"
     }
   ]
 }
